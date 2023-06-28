@@ -1,30 +1,34 @@
 const express = require('express');
-const mysql = require('mysql');
-const myconn = require('express-myconnection');
-
+const bodyParser = require('body-parser');
+const authController = require('./controllers/auth');
+const errorController = require('./controllers/error');
+const authRoutes = require('./routes/auth');
 const app = express();
-const dbOptions = {
-    host: 'localhost',
-    port: 3306,
-    user: 'api',
-    password: 'apiTfg*2023*',
-    database: 'tfg_db'
-}
 
-routes = require('./routes/index');
+app.use(bodyParser.json())
 app.set('port', process.env.PORT || 3000);
 // middlewares
 
-app.use(myconn(mysql, dbOptions, 'single'));
 app.use(express.json());
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE')
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+
+});
 // routes
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+app.use('/auth', require('./routes/auth'));
 
-app.use(routes);
-app.use('/api', require('./routes/user'));
+app.use(errorController.get404);
+app.use(errorController.get500);
+
+//app.use(routes);
+//pp.use('/api', require('./routes/user'));
 
 // server runing
 app.listen(app.get('port'), () => {
