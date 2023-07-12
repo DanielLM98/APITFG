@@ -7,13 +7,13 @@ exports.signup = async(req, res, next) => {
     if (!errors.isEmpty()) return
     const nombre = req.body.nombre;
     const apellido = req.body.apellido;
-    const correoElectronico = req.body.correoElectronico;
+    const email = req.body.email;
     const contrasena = req.body.contrasena;
     const tipoUsuario = req.body.tipoUsuario;
     const estado = req.body.estado;
     try {
         const hashedPassword = await bcrypt.hash(contrasena, 12);
-        const userDetail = new User(nombre, apellido, correoElectronico, hashedPassword, tipoUsuario, estado);
+        const userDetail = new User(nombre, apellido, email, hashedPassword, tipoUsuario, estado);
 
         const result = await User.save(userDetail);
         res.status(201).json({ message: 'User registered!' });
