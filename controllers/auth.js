@@ -3,11 +3,11 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 exports.signup = async(req, res, next) => {
     const errors = validationResult(req);
-
+    console.log(errors)
     if (!errors.isEmpty()) return
     const nombre = req.body.nombre;
     const apellido = req.body.apellido;
-    const email = req.body.email;
+    const email = req.body.correoElectronico;
     const contrasena = req.body.contrasena;
     const tipoUsuario = req.body.tipoUsuario;
     const estado = req.body.estado;

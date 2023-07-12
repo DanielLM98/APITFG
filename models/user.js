@@ -13,7 +13,7 @@ module.exports = class User {
         return db.execute('SELECT * FROM usuarios WHERE CorreoElectronico = ?', [email]);
     }
     static save(user) {
-        console.log("llega")
-        return db.execute('INSERT INTO `usuarios` (`ID`, `Nombre`, `Apellidos`, `CorreoElectronico`, `Contrasena`, `TipoUsuario`, `Estado`) VALUES (?,?,?,?,?,?,?)', [null, user.nombre, user.apellido, user.email, user.contrasena, user.tipoUsuario, user.estado]);
+        console.log(user)
+        return db.execute('INSERT INTO `usuarios` (`ID`, `Nombre`, `Apellido`, `CorreoElectronico`, `Contrasena`, `TipoUsuario`, `Estado`) VALUES (?,?,?,?,?,?,?)', [null, user.nombre, user.apellido, user.email, user.contrasena, user.tipoUsuario, user.estado]);
     }
 };
