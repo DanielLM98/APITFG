@@ -27,4 +27,6 @@ router.get('/', (req, res) => {
     res.send('Auth!');
 });
 
+router.post('/login', authController.login);
+
 module.exports = router;

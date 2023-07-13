@@ -10,7 +10,7 @@ module.exports = class User {
     }
 
     static find(email) {
-        return db.execute('SELECT * FROM usuarios WHERE CorreoElectronico = ?', [email]);
+        return db.execute('SELECT * FROM usuarios WHERE correoElectronico = ?', [email]);
     }
     static save(user) {
         console.log(user)
