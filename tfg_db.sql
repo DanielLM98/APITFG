@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-06-2023 a las 19:11:55
+-- Tiempo de generación: 21-07-2023 a las 20:10:35
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.12
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `alumnos` (
   `ID` int(11) NOT NULL,
+  `IDUsuario` int(11) NOT NULL,
   `IDCentro` int(11) DEFAULT NULL,
   `IDEmpresa` int(11) DEFAULT NULL,
   `IDTutorPracticas` int(11) DEFAULT NULL,
@@ -69,6 +70,13 @@ CREATE TABLE `centros` (
   `Telefono` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `centros`
+--
+
+INSERT INTO `centros` (`ID`, `Nombre`, `Direccion`, `CorreoElectronico`, `Telefono`) VALUES
+(2, 'Poligono Sur', 'C. Esclava del Señor, 2, 41013 Sevilla', 'iespsur@gmail.com', '955622844');
+
 -- --------------------------------------------------------
 
 --
@@ -103,6 +111,7 @@ CREATE TABLE `formularios` (
 
 CREATE TABLE `tutoresclase` (
   `ID` int(11) NOT NULL,
+  `IDUsuario` int(11) NOT NULL,
   `CentroID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -114,6 +123,7 @@ CREATE TABLE `tutoresclase` (
 
 CREATE TABLE `tutorestrabajo` (
   `ID` int(11) NOT NULL,
+  `IDUsuario` int(11) NOT NULL,
   `EmpresaID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -138,7 +148,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`ID`, `Nombre`, `Apellido`, `CorreoElectronico`, `Contrasena`, `TipoUsuario`, `Estado`) VALUES
-(1, 'Daniel', 'Luna Moreno', 'daniellunamoreno@gmail.com', 'asdf', 'Profesor', 'Activo');
+(8, 'Daniel', 'Luna Moreno', 'daniellunamoreno@gmail.com', '$2a$12$nTaAtUuKkhmpAxSdbjRUVuafIRNAkfgd3WYlFOI3aO/2UyT//vxBy', 'Profesor', 'Activo');
 
 --
 -- Índices para tablas volcadas
@@ -152,7 +162,8 @@ ALTER TABLE `alumnos`
   ADD KEY `IDCentro` (`IDCentro`),
   ADD KEY `IDEmpresa` (`IDEmpresa`),
   ADD KEY `IDTutorPracticas` (`IDTutorPracticas`),
-  ADD KEY `IDTutorClase` (`IDTutorClase`);
+  ADD KEY `IDTutorClase` (`IDTutorClase`),
+  ADD KEY `IDUsuario` (`IDUsuario`);
 
 --
 -- Indices de la tabla `camposformularios`
@@ -185,14 +196,18 @@ ALTER TABLE `formularios`
 --
 ALTER TABLE `tutoresclase`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `CentroID` (`CentroID`);
+  ADD KEY `CentroID` (`CentroID`),
+  ADD KEY `IDUsuario` (`ID`),
+  ADD KEY `tutoresclase_ibfk_3` (`IDUsuario`);
 
 --
 -- Indices de la tabla `tutorestrabajo`
 --
 ALTER TABLE `tutorestrabajo`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `EmpresaID` (`EmpresaID`);
+  ADD KEY `EmpresaID` (`EmpresaID`),
+  ADD KEY `IDUsuario` (`ID`),
+  ADD KEY `tutorestrabajo_ibfk_3` (`IDUsuario`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -205,10 +220,16 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `centros`
+--
+ALTER TABLE `centros`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas
@@ -222,7 +243,8 @@ ALTER TABLE `alumnos`
   ADD CONSTRAINT `alumnos_ibfk_2` FOREIGN KEY (`IDCentro`) REFERENCES `centros` (`ID`),
   ADD CONSTRAINT `alumnos_ibfk_3` FOREIGN KEY (`IDEmpresa`) REFERENCES `empresas` (`ID`),
   ADD CONSTRAINT `alumnos_ibfk_4` FOREIGN KEY (`IDTutorPracticas`) REFERENCES `tutorestrabajo` (`ID`),
-  ADD CONSTRAINT `alumnos_ibfk_5` FOREIGN KEY (`IDTutorClase`) REFERENCES `tutoresclase` (`ID`);
+  ADD CONSTRAINT `alumnos_ibfk_5` FOREIGN KEY (`IDTutorClase`) REFERENCES `tutoresclase` (`ID`),
+  ADD CONSTRAINT `alumnos_ibfk_6` FOREIGN KEY (`IDUsuario`) REFERENCES `usuarios` (`ID`);
 
 --
 -- Filtros para la tabla `camposformularios`
@@ -236,14 +258,16 @@ ALTER TABLE `camposformularios`
 --
 ALTER TABLE `tutoresclase`
   ADD CONSTRAINT `tutoresclase_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `usuarios` (`ID`),
-  ADD CONSTRAINT `tutoresclase_ibfk_2` FOREIGN KEY (`CentroID`) REFERENCES `centros` (`ID`);
+  ADD CONSTRAINT `tutoresclase_ibfk_2` FOREIGN KEY (`CentroID`) REFERENCES `centros` (`ID`),
+  ADD CONSTRAINT `tutoresclase_ibfk_3` FOREIGN KEY (`IDUsuario`) REFERENCES `usuarios` (`ID`);
 
 --
 -- Filtros para la tabla `tutorestrabajo`
 --
 ALTER TABLE `tutorestrabajo`
   ADD CONSTRAINT `tutorestrabajo_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `usuarios` (`ID`),
-  ADD CONSTRAINT `tutorestrabajo_ibfk_2` FOREIGN KEY (`EmpresaID`) REFERENCES `empresas` (`ID`);
+  ADD CONSTRAINT `tutorestrabajo_ibfk_2` FOREIGN KEY (`EmpresaID`) REFERENCES `empresas` (`ID`),
+  ADD CONSTRAINT `tutorestrabajo_ibfk_3` FOREIGN KEY (`IDUsuario`) REFERENCES `usuarios` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
