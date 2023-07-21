@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth', require('./routes/auth'));
+app.use('/centros', require('./routes/centros'));
 
 app.use(errorController.get404);
 app.use(errorController.get500);

@@ -56,8 +56,9 @@ exports.login = async(req, res, next) => {
             email: storedUser.correoElectronico,
             userId: storedUser.id
         }, 'secretfortoken', { expiresIn: '1h' });
+        const role = storedUser.TipoUsuario;
 
-        res.status(200).json({ token: token, userId: storedUser.id });
+        res.status(200).json({ token: token, userId: storedUser.id, role: role});
 
     }catch (error) {
         if (!error.statusCode) {
