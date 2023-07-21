@@ -25,7 +25,7 @@ exports.fetchCentro = async(req, res, next) => {
         }
         next(err);
     }
-}; 
+};
 
 exports.deleteCentro = async(req, res, next) => {
     try {
@@ -49,6 +49,7 @@ exports.createCenter = async(req, res, next) => {
     const telefono = req.body.telefono;
     try {
         const CentroDetail = new Centro(nombre, direccion, email, telefono);
+        console.log(CentroDetail)
         const result = await Centro.save(CentroDetail);
         res.status(201).json({ message: 'Center registered!' });
     } catch (error) {
@@ -59,4 +60,3 @@ exports.createCenter = async(req, res, next) => {
     }
 
 };
-
