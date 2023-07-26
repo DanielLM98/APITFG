@@ -24,6 +24,9 @@ app.get('/', (req, res) => {
 
 app.use('/auth', require('./routes/auth'));
 app.use('/centros', require('./routes/centros'));
+//app.use('/usuarios', require('./routes/usuarios'));
+app.use('/empresas', require('./routes/empresas'));
+app.use('/formularios', require('./routes/formularios'));
 
 app.use(errorController.get404);
 app.use(errorController.get500);
