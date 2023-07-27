@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-07-2023 a las 20:10:35
+-- Tiempo de generación: 27-07-2023 a las 15:04:19
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.12
 
@@ -75,7 +75,10 @@ CREATE TABLE `centros` (
 --
 
 INSERT INTO `centros` (`ID`, `Nombre`, `Direccion`, `CorreoElectronico`, `Telefono`) VALUES
-(2, 'Poligono Sur', 'C. Esclava del Señor, 2, 41013 Sevilla', 'iespsur@gmail.com', '955622844');
+(2, 'Poligono Sur2', 'C. Esclava del Señor, 2, 41013 Sevilla', 'iespsur@gmail.com', '955622844'),
+(3, 'Poligono Sur2', 'C. Esclava del Señor, 2, 41013 Sevilla', 'iespsur@gmail.com', '955622844'),
+(4, 'Testereasd', 'Avda. La Paz 12', 'test@test.com', '647876022'),
+(5, 'Teste23asd', 'asdsadsadsadsadsadsa', 'terst@test.com', '123456789');
 
 -- --------------------------------------------------------
 
@@ -91,6 +94,14 @@ CREATE TABLE `empresas` (
   `Telefono` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `empresas`
+--
+
+INSERT INTO `empresas` (`ID`, `Nombre`, `Direccion`, `CorreoElectronico`, `Telefono`) VALUES
+(1, 'daniellunamoreno@gmail.com', 'asdf123456*', 'test@tes.com', '12345798'),
+(2, 'Test de nuevo', 'test de nuevo 2', 'tst@ge2.com', '123456789');
+
 -- --------------------------------------------------------
 
 --
@@ -99,9 +110,22 @@ CREATE TABLE `empresas` (
 
 CREATE TABLE `formularios` (
   `ID` int(11) NOT NULL,
-  `Nombre` varchar(100) NOT NULL,
-  `Descripcion` text DEFAULT NULL
+  `Nombre` text NOT NULL,
+  `Descripcion` text DEFAULT NULL,
+  `Campos` text NOT NULL,
+  `Rol` text NOT NULL,
+  `Archivo` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `formularios`
+--
+
+INSERT INTO `formularios` (`ID`, `Nombre`, `Descripcion`, `Campos`, `Rol`, `Archivo`) VALUES
+(1, 'asdsaasdsada', 'asdsaadsadsadsad', 'SafeValue m', 'Profesor', ''),
+(2, 'test', 'test', '    <div class=\"row\">\r\n        <div class=\"col\">\r\n            <div class=\"mb-3\">\r\n                <label class=\"form-label\">Nombre</label>\r\n                \r\n            </div>\r\n        </div>\r\n    </div>\r\n            \r\n    <div class=\"row\">\r\n        <div class=\"col\">\r\n            <div class=\"mb-3\">\r\n                <label class=\"form-label\">Descripción</label>\r\n                \r\n            </div>\r\n        </div>\r\n    </div>', 'Profesor', ''),
+(3, 'sadsadsad', 'sasadsadsa', '`<form [ngSubmit]=\'onSubmit()\' novalidate>    <div class=\"row\">\\n` +\r\n    \'        <div class=\"col\">\\n\' +\r\n    \'            <div class=\"mb-3\">\\n\' +\r\n    \'                <label class=\"form-label\">Nombre</label>\\n\' +\r\n    \'                \\n\' +\r\n    \'            </div>\\n\' +\r\n    \'        </div>\\n\' +\r\n    \'    </div>\\n\' +\r\n    \'            \\n\' +\r\n    \'    <div class=\"row\">\\n\' +\r\n    \'        <div class=\"col\">\\n\' +\r\n    \'            <div class=\"mb-3\">\\n\' +\r\n    \'                <label class=\"form-label\">Descripción</label>\\n\' +\r\n    \'                \\n\' +\r\n    \'            </div>\\n\' +\r\n    \'        </div>\\n\' +\r\n    \'    </div>\\n\' +\r\n    \'</form>\'', 'asdadsa', 'asdsadsa'),
+(4, 'asdsadsadsad', 'adsadsadsa', '<form [ngSubmit]=\'onSubmit()\' novalidate>    <div class=\"row\">\n        <div class=\"col\">\n            <div class=\"mb-3\">\n                <label class=\"form-label\">Nombre</label>\n                \n            </div>\n        </div>\n    </div>\n            \n    <div class=\"row\">\n        <div class=\"col\">\n            <div class=\"mb-3\">\n                <label class=\"form-label\">Descripción</label>\n                \n            </div>\n        </div>\n    </div>\n</form>', 'Profesor', ' ');
 
 -- --------------------------------------------------------
 
@@ -223,7 +247,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `empresas`
+--
+ALTER TABLE `empresas`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `formularios`
+--
+ALTER TABLE `formularios`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

@@ -5,7 +5,7 @@ const Empresa = require('../models/empresas');
 
 exports.fetchAll = async(req, res, next) => {
     try {
-        const [allempresas] = await Centro.fetchAll();
+        const [allempresas] = await Empresa.fetchAll();
         res.status(200).json(allempresas);
     } catch (err) {
         if (!err.statusCode) {
@@ -15,10 +15,10 @@ exports.fetchAll = async(req, res, next) => {
     }
 };
 
-exports.fetchCentro = async(req, res, next) => {
+exports.fetchEmpresa = async(req, res, next) => {
     try {
-        const [Centro] = await Centro.find(req.params.id);
-        res.status(200).json(Centro[0]);
+        const [Empresa] = await Empresa.find(req.params.id);
+        res.status(200).json(Empresa[0]);
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -27,9 +27,9 @@ exports.fetchCentro = async(req, res, next) => {
     }
 }; 
 
-exports.deleteCentro = async(req, res, next) => {
+exports.deleteEmpresa = async(req, res, next) => {
     try {
-        const deleteResponse = await Centro.deleteCentro(req.params.id);
+        const deleteResponse = await Empresa.deleteEmpresa(req.params.id);
         res.status(200).json({ message: 'Deleted center' });
     } catch (err) {
         if (!err.statusCode) {
@@ -39,7 +39,7 @@ exports.deleteCentro = async(req, res, next) => {
     }
 };
 
-exports.createCenter = async(req, res, next) => {
+exports.createEmpresa = async(req, res, next) => {
     const errors = validationResult(req);
     console.log(errors)
     if (!errors.isEmpty()) return
@@ -48,12 +48,13 @@ exports.createCenter = async(req, res, next) => {
     const email = req.body.correoElectronico;
     const telefono = req.body.telefono;
     try {
-        const CentroDetail = new Centro(nombre, direccion, email, telefono);
-        const result = await Centro.save(CentroDetail);
-        res.status(201).json({ message: 'Center registered!' });
+        const EmpresaDetail = new Empresa(nombre, direccion, email, telefono);
+        const result = await Empresa.save(EmpresaDetail);
+        res.status(201).json({ message: 'Empresa registered!' });
     } catch (error) {
         if (!error.statusCode) {
             error.statusCode = 500;
+            console.log(error)
         }
         next(error);
     }
