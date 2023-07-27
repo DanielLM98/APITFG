@@ -6,6 +6,7 @@ const User = require('../models/user');
 
 const jwt = require('jsonwebtoken');
 
+
 exports.signup = async(req, res, next) => {
     const errors = validationResult(req);
     console.log(errors)
@@ -19,7 +20,6 @@ exports.signup = async(req, res, next) => {
     try {
         const hashedPassword = await bcrypt.hash(contrasena, 12);
         const userDetail = new User(nombre, apellido, email, hashedPassword, tipoUsuario, estado);
-
         const result = await User.save(userDetail);
         res.status(201).json({ message: 'User registered!' });
     } catch (error) {
@@ -55,13 +55,15 @@ exports.login = async(req, res, next) => {
         const token = jwt.sign({
             email: storedUser.correoElectronico,
             userId: storedUser.id
-        }, 'secretfortoken', { expiresIn: '1h' });
+        }, 'secretfortoken', { expiresIn: '24h' });
         const role = storedUser.TipoUsuario;
+        userSession = new User( storedUser.Nombre, storedUser.Apellido, storedUser.CorreoElectronico, '', storedUser.TipoUsuario, storedUser.Estado);
         res.cookie('token', token, { httpOnly: true })
-        res.status(200).json({ token: token, userId: storedUser.id, role: role });
+        res.status(200).json({ token: token, userSession: userSession, userId: storedUser.ID });
 
     } catch (error) {
         if (!error.statusCode) {
+            console.log(error);
             error.statusCode = 500;
         }
         next(error);

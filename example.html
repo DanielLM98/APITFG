@@ -1,0 +1,20 @@
+<form (ngSubmit)="onSubmit()" novalidate >
+    <div class="row" >
+        <div class="col">
+            <div class="mb-3" [innerHTML]="validate">
+                <label class="form-label">Nombre</label>
+                <input class="form-control" type="text" placeholder="Nombre" >
+            </div>
+        </div>
+    </div>
+            
+    <div class="row">
+        <div class="col">
+            <div class="mb-3" [innerHTML]="validate">
+               
+                <label class="form-label">Descripción</label>
+                <input class="form-control" type="textarea" placeholder="Descripción">
+            </div>
+        </div>
+    </div>
+</form>
