@@ -83,15 +83,17 @@ exports.createForm = async (req, res, next) => {
 
 };
 
-function base64ToBlob(base64Data, contentType) {
-    const binaryData = atob(base64Data);
-    const arrayBuffer = new ArrayBuffer(binaryData.length);
-    const uint8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < binaryData.length; i++) {
-        uint8Array[i] = binaryData.charCodeAt(i);
+exports.getFormsByRol = async (req, res, next) => {
+    try {
+        const [Forms] = await Formulario.getFormsByRol(req.params.rol);
+        res.status(200).json(Forms);
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
     }
-    return new Blob([uint8Array], { type: contentType });
-}
+};
 
 
 exports.updateForm = async (req, res, next) => {

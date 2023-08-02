@@ -57,6 +57,7 @@ exports.login = async(req, res, next) => {
             userId: storedUser.id
         }, 'secretfortoken', { expiresIn: '24h' });
         const role = storedUser.TipoUsuario;
+        
         userSession = new User( storedUser.Nombre, storedUser.Apellido, storedUser.CorreoElectronico, '', storedUser.TipoUsuario, storedUser.Estado);
         res.cookie('token', token, { httpOnly: true })
         res.status(200).json({ token: token, userSession: userSession, userId: storedUser.ID });

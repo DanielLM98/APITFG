@@ -29,5 +29,9 @@ module.exports = class Formularios {
         return db.execute('SELECT * FROM formularios WHERE ID = ?', [id]);
     }
 
+
+    static getFormsByRol(rol) {
+        return db.execute('SELECT * FROM formularios WHERE Rol = ?', [rol]);
+    }
         
 }

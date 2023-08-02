@@ -11,16 +11,16 @@ app.set('port', process.env.PORT || 3000);
 // middlewares
 
 app.use(express.json());
-//app.use((req, res, next) => {
-//    res.setHeader('Access-Control-Allow-Origin', '*');
-//    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE')
-//    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//    next();
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE')
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
 
-//});
+});
 
 app.use(cors());
-app.use(bodyParser.urlencoded({extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // routes
@@ -32,12 +32,11 @@ app.use('/centros', require('./routes/centros'));
 app.use('/usuarios', require('./routes/usuarios'));
 app.use('/empresas', require('./routes/empresas'));
 app.use('/formularios', require('./routes/formularios'));
+app.use('/respuestas', require('./routes/respuestas'));
 
 app.use(errorController.get404);
 app.use(errorController.get500);
 
-//app.use(routes);
-//pp.use('/api', require('./routes/user'));
 
 // server runing
 app.listen(app.get('port'), () => {
