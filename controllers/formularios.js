@@ -2,7 +2,22 @@ const { validationResult } = require('express-validator');
 
 const Formulario = require('../models/formularios');
 
+const multer = require('multer');
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/')
+    },
+    filename: function (req, file, cb) {
+        const extension = file.mimetype.split('./')[1];
+        const filename = `${file.fieldname}-${Date.now()}.${extension}`;
+        nombrearchivo = filename;
+        cb(null, filename)
+    }
+})
+
+const upload = multer({ storage: storage }).single('archivo');
+let nombrearchivo = '';
 exports.fetchAll = async (req, res, next) => {
     try {
         const [allForms] = await Formulario.fetchAll();
@@ -27,18 +42,34 @@ exports.fetchForm = async (req, res, next) => {
     }
 };
 
+exports.testForm = async (req, res, next) => {
+    upload(req, res, function (err) {
+        multer({ storage: storage }).single('archivo');
+        res.json({ message: 'Formulario registered!' })
+    });
+
+};
+
+
 exports.createForm = async (req, res, next) => {
+
     const errors = validationResult(req);
-    console.log(req.body)
-    console.log(req.file)
-    console.log(errors)
+
+
     if (!errors.isEmpty()) return
     const nombre = req.body.nombre;
     const descripcion = req.body.descripcion;
     const campos = req.body.campos;
     const rol = req.body.rol;
-    const archivo = req.file;
-        try {
+    let archivo;
+    if (req.file == undefined) {
+        
+        archivo = '';
+    } else {
+        archivo = req.file.path;
+    }
+
+    try {
         const FormularioDetail = new Formulario(nombre, descripcion, campos, rol, archivo);
         const result = await Formulario.save(FormularioDetail);
         res.status(201).json({ message: 'Formulario registered!' });
@@ -51,6 +82,17 @@ exports.createForm = async (req, res, next) => {
     }
 
 };
+
+function base64ToBlob(base64Data, contentType) {
+    const binaryData = atob(base64Data);
+    const arrayBuffer = new ArrayBuffer(binaryData.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < binaryData.length; i++) {
+        uint8Array[i] = binaryData.charCodeAt(i);
+    }
+    return new Blob([uint8Array], { type: contentType });
+}
+
 
 exports.updateForm = async (req, res, next) => {
     try {

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { body } = require('express-validator');
+//const { body } = require('express-validator');
 
 const formulariosController = require('../controllers/formularios');
 
@@ -13,11 +13,12 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public/uploads/')
+        console.log(req)
+        cb(null, 'public/')
     },
     filename: function (req, file, cb) {
-        const extension = file.mimetype.split('./')[1];
-        const filename = `${file.fieldname}-${Date.now()}.${extension}`;
+        const extension = file.mimetype.split('/')[1];
+        const filename = `${file.originalname}-${Date.now()}.${extension}`;
         console.log(filename)
         cb(null, filename)
     }
@@ -28,13 +29,7 @@ const upload = multer({ storage: storage });
 router.get('/',auth, formulariosController.fetchAll);
 router.get('/get/:id',auth, formulariosController.fetchForm);
 
-router.post('/create',[auth, upload.single('archivo'),
-    body('nombre').trim().not().isEmpty(),
-    body('descripcion').trim().not().isEmpty(),
-    body('campos').trim().not().isEmpty(),
-    body('rol').trim().not().isEmpty(),
-], formulariosController.createForm);
-
+router.post('/create', auth, upload.single('archivo'),formulariosController.createForm);
 router.delete('/delete/:id', auth, formulariosController.deleteForm);
 
 module.exports = router;
