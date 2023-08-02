@@ -32,4 +32,6 @@ router.get('/get/:id',auth, formulariosController.fetchForm);
 router.post('/create', auth, upload.single('archivo'),formulariosController.createForm);
 router.delete('/delete/:id', auth, formulariosController.deleteForm);
 
+router.get('/getbyrol/:rol',auth, formulariosController.getFormsByRol);
+
 module.exports = router;
