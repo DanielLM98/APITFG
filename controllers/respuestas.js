@@ -40,20 +40,18 @@ exports.deleteRespuesta = async(req, res, next) => {
 
 exports.createRespuesta = async(req, res, next) => {
     const errors = validationResult(req);
-    console.log(errors)
     if (!errors.isEmpty()) return
 
     const IDUsuario = req.body.IDUsuario;
     const IDFormulario = req.body.IDFormulario;
     const Respuestas = req.body.Respuestas;
     try {
-        const RespuestaDetail = new Respuesta(IDUsuario, IDFormulario, Respuestas);
-        console.log(RespuestaDetail)
-        const result = await Respuesta.save(RespuestaDetail);
+        const result = await Respuesta.save(IDUsuario, IDFormulario, Respuestas);
         res.status(201).json({ message: 'Center registered!' });
     } catch (error) {
         if (!error.statusCode) {
             error.statusCode = 500;
+            console.log(error)
         }
         next(error);
     }

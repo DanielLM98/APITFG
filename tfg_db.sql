@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-07-2023 a las 15:04:19
+-- Tiempo de generación: 04-08-2023 a las 11:15:55
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.12
 
@@ -78,7 +78,8 @@ INSERT INTO `centros` (`ID`, `Nombre`, `Direccion`, `CorreoElectronico`, `Telefo
 (2, 'Poligono Sur2', 'C. Esclava del Señor, 2, 41013 Sevilla', 'iespsur@gmail.com', '955622844'),
 (3, 'Poligono Sur2', 'C. Esclava del Señor, 2, 41013 Sevilla', 'iespsur@gmail.com', '955622844'),
 (4, 'Testereasd', 'Avda. La Paz 12', 'test@test.com', '647876022'),
-(5, 'Teste23asd', 'asdsadsadsadsadsadsa', 'terst@test.com', '123456789');
+(5, 'Teste23asd', 'asdsadsadsadsadsadsa', 'terst@test.com', '123456789'),
+(6, 'sadsadasdsadsada', 'asdsadsadsadsadasd', 'daniel.luna@asfdsadsad.com', '123456798');
 
 -- --------------------------------------------------------
 
@@ -122,10 +123,28 @@ CREATE TABLE `formularios` (
 --
 
 INSERT INTO `formularios` (`ID`, `Nombre`, `Descripcion`, `Campos`, `Rol`, `Archivo`) VALUES
-(1, 'asdsaasdsada', 'asdsaadsadsadsad', 'SafeValue m', 'Profesor', ''),
-(2, 'test', 'test', '    <div class=\"row\">\r\n        <div class=\"col\">\r\n            <div class=\"mb-3\">\r\n                <label class=\"form-label\">Nombre</label>\r\n                \r\n            </div>\r\n        </div>\r\n    </div>\r\n            \r\n    <div class=\"row\">\r\n        <div class=\"col\">\r\n            <div class=\"mb-3\">\r\n                <label class=\"form-label\">Descripción</label>\r\n                \r\n            </div>\r\n        </div>\r\n    </div>', 'Profesor', ''),
-(3, 'sadsadsad', 'sasadsadsa', '`<form [ngSubmit]=\'onSubmit()\' novalidate>    <div class=\"row\">\\n` +\r\n    \'        <div class=\"col\">\\n\' +\r\n    \'            <div class=\"mb-3\">\\n\' +\r\n    \'                <label class=\"form-label\">Nombre</label>\\n\' +\r\n    \'                \\n\' +\r\n    \'            </div>\\n\' +\r\n    \'        </div>\\n\' +\r\n    \'    </div>\\n\' +\r\n    \'            \\n\' +\r\n    \'    <div class=\"row\">\\n\' +\r\n    \'        <div class=\"col\">\\n\' +\r\n    \'            <div class=\"mb-3\">\\n\' +\r\n    \'                <label class=\"form-label\">Descripción</label>\\n\' +\r\n    \'                \\n\' +\r\n    \'            </div>\\n\' +\r\n    \'        </div>\\n\' +\r\n    \'    </div>\\n\' +\r\n    \'</form>\'', 'asdadsa', 'asdsadsa'),
-(4, 'asdsadsadsad', 'adsadsadsa', '<form [ngSubmit]=\'onSubmit()\' novalidate>    <div class=\"row\">\n        <div class=\"col\">\n            <div class=\"mb-3\">\n                <label class=\"form-label\">Nombre</label>\n                \n            </div>\n        </div>\n    </div>\n            \n    <div class=\"row\">\n        <div class=\"col\">\n            <div class=\"mb-3\">\n                <label class=\"form-label\">Descripción</label>\n                \n            </div>\n        </div>\n    </div>\n</form>', 'Profesor', ' ');
+(10, 'asadsadsadsadsad', 'sadsadsadsadsadsa', '                        <div class=\"row\">\r\n                            <div class=\"col\">\r\n                                <div class=\"mb-3\">\r\n                                    <label class=\"form-label\">Nombre</label>\r\n                                    <input class=\"form-control\" type=\"text\" placeholder=\"Nombre\" formControlName=\"nombre\">\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <div class=\"row\">\r\n                            <div class=\"col\">\r\n                                <div class=\"mb-3\">\r\n                                    <label class=\"form-label\">Descripción</label>\r\n                                    <input class=\"form-control\" type=\"textarea\" placeholder=\"Nombre\"\r\n                                        formControlName=\"descripcion\">\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"row\">\r\n                            <div class=\"col\">\r\n                                <div class=\"mb-3\">\r\n                                    <p><small>Introduzca el formulario en html siguiendo la siguiente <a\r\n                                                href=\"../../../../assets/example.html\" download>plantilla</a></small>\r\n                                    </p>\r\n                                    <p><small>Tenga en cuenta la siguente <a>guía</a> para adaptar el pdf en el que será\r\n                                            plasmada la información del formulario relleno</small></p>\r\n                                    <textarea class=\"form-control\" type=\"textarea\" height=\"100px\"\r\n                                        placeholder=\"HTML Formulario\" formControlName=\"campos\"></textarea>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <div class=\"row\">\r\n                            <div class=\"col\">\r\n                                <div class=\"mb-3\">\r\n                                    <label class=\"form-label\">Rol del formulario</label>\r\n                                    <select class=\"form-control\" formControlName=\"rol\">\r\n                                        <option value=\"Profesor\">Profesor</option>\r\n                                        <option value=\"Alumno\">Alumno</option>\r\n                                        <option value=\"TutorEmpresa\">Tutor Empresa</option>\r\n                                        <option value=\"TutorCentro\">Tutor Centro</option>\r\n                                    </select>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        \r\n                        ', 'Alumno', 'public\\FCT_Val_Alum_r.pdf-1690947732808.pdf'),
+(11, 'sdsadsadsadsadsa', 'asdsadsadsadsa', 'asdsadsadsadsadsadsadsadsadsa', 'Profesor', 'public\\FCT_Val_Alum_r.pdf-1690948146629.pdf');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuestas`
+--
+
+CREATE TABLE `respuestas` (
+  `ID` int(11) NOT NULL,
+  `IDUsuario` int(11) NOT NULL,
+  `IDFormulario` int(11) NOT NULL,
+  `Respuestas` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `respuestas`
+--
+
+INSERT INTO `respuestas` (`ID`, `IDUsuario`, `IDFormulario`, `Respuestas`) VALUES
+(2, 8, 10, '{\"nombre\":\"asdsadsadsa\",\"descripcion\":\"dsadsadsdsad\",\"campos\":\"sadsadsadsad\",\"rol\":\"Profesor\"}');
 
 -- --------------------------------------------------------
 
@@ -172,7 +191,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`ID`, `Nombre`, `Apellido`, `CorreoElectronico`, `Contrasena`, `TipoUsuario`, `Estado`) VALUES
-(8, 'Daniel', 'Luna Moreno', 'daniellunamoreno@gmail.com', '$2a$12$nTaAtUuKkhmpAxSdbjRUVuafIRNAkfgd3WYlFOI3aO/2UyT//vxBy', 'Profesor', 'Activo');
+(8, 'Daniel', 'Luna Moreno', 'daniellunamoreno@gmail.com', '$2a$12$nTaAtUuKkhmpAxSdbjRUVuafIRNAkfgd3WYlFOI3aO/2UyT//vxBy', 'Administrador', 'Activo');
 
 --
 -- Índices para tablas volcadas
@@ -216,6 +235,14 @@ ALTER TABLE `formularios`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indices de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `IDFORMULARIO` (`IDFormulario`),
+  ADD KEY `IDUSUARIO` (`IDUsuario`);
+
+--
 -- Indices de la tabla `tutoresclase`
 --
 ALTER TABLE `tutoresclase`
@@ -247,7 +274,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `empresas`
@@ -259,7 +286,13 @@ ALTER TABLE `empresas`
 -- AUTO_INCREMENT de la tabla `formularios`
 --
 ALTER TABLE `formularios`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -288,6 +321,13 @@ ALTER TABLE `alumnos`
 ALTER TABLE `camposformularios`
   ADD CONSTRAINT `camposformularios_ibfk_1` FOREIGN KEY (`UsuarioID`) REFERENCES `usuarios` (`ID`),
   ADD CONSTRAINT `camposformularios_ibfk_2` FOREIGN KEY (`FormularioID`) REFERENCES `formularios` (`ID`);
+
+--
+-- Filtros para la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD CONSTRAINT `IDFORMULARIO` FOREIGN KEY (`IDFormulario`) REFERENCES `formularios` (`ID`),
+  ADD CONSTRAINT `IDUSUARIO` FOREIGN KEY (`IDUsuario`) REFERENCES `usuarios` (`ID`);
 
 --
 -- Filtros para la tabla `tutoresclase`
