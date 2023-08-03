@@ -32,7 +32,7 @@ exports.fetchAll = async (req, res, next) => {
 
 exports.fetchForm = async (req, res, next) => {
     try {
-        const [Form] = await Formulario.find(req.params.id);
+        const [Form] = await Formulario.fetchOne(req.params.id);
         res.status(200).json(Form[0]);
     } catch (err) {
         if (!err.statusCode) {
