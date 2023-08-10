@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
 
+const nodemailer = require('nodemailer');
+
 const jwt = require('jsonwebtoken');
 
 
@@ -57,8 +59,8 @@ exports.login = async(req, res, next) => {
             userId: storedUser.id
         }, 'secretfortoken', { expiresIn: '24h' });
         const role = storedUser.TipoUsuario;
-        
-        userSession = new User( storedUser.Nombre, storedUser.Apellido, storedUser.CorreoElectronico, '', storedUser.TipoUsuario, storedUser.Estado);
+
+        userSession = new User(storedUser.Nombre, storedUser.Apellido, storedUser.CorreoElectronico, '', storedUser.TipoUsuario, storedUser.Estado);
         res.cookie('token', token, { httpOnly: true })
         res.status(200).json({ token: token, userSession: userSession, userId: storedUser.ID });
 
@@ -70,4 +72,81 @@ exports.login = async(req, res, next) => {
         next(error);
     }
 
+}
+
+exports.recovery = async(req, res, next) => {
+    console.log(req.body)
+    const email = req.body.correoElectronico;
+    try {
+        const user = await User.find(email);
+        console.log(user[0][0].CorreoElectronico)
+        if (user[0].length !== 1) {
+            const error = new Error('A user with this email could not be found.');
+            error.statusCode = 401;
+            throw error;
+            console.log(error);
+        } else {
+            const token = jwt.sign({ correo: email }, 'secretfortoken', { expiresIn: '24h' });
+            const transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                port: 465,
+                secure: true,
+                auth: {
+                    user: 'dlunmortfg@gmail.com',
+                    pass: 'baiayukopdahoqzm'
+                }
+            });
+
+            var mailOptions = {
+                from: 'dlunmortfg@gmail.com',
+                to: email,
+                subject: 'Password Recovery',
+                html: '<h1>Hola ' + user[0][0].Nombre + ' ' + user[0][0].Apellido + ' </h1>' +
+                    '<p>Has solicitado recuperar tu contraseña, para hacerlo da click en el siguiente enlace:</p>' +
+                    '<a href="http://localhost:4200/resetPassword/?user=' + email + '&token=' + token + '">Recuperar contraseña </a>',
+
+            };
+
+            transporter.sendMail(mailOptions, function(error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+
+                }
+            });
+        }
+    } catch (error) {
+        if (!error.statusCode) {
+            console.log(error);
+            error.statusCode = 500;
+        }
+        next(error);
+    }
+}
+
+exports.resetPassword = async(req, res, next) => {
+    const email = jwt.decode(req.headers['authorization'].split(' ')[1]).correo;
+    const contrasena = req.body.password;
+    try {
+        const hashedPassword = await bcrypt.hash(contrasena, 12);
+        const user = await User.find(email);
+        if (user[0].length !== 1) {
+            const error = new Error('A user with this email could not be found.');
+            error.statusCode = 401;
+            throw error;
+        } else {
+            const result = await User.resetPassword(email, hashedPassword);
+            console.log("cambio realizado correctamente")
+            res.status(201).json({ message: 'Password updated!' });
+
+        }
+
+    } catch (error) {
+        if (!error.statusCode) {
+            console.log(error);
+            error.statusCode = 500;
+        }
+        next(error);
+    }
 }
