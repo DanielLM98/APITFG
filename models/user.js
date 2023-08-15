@@ -17,10 +17,14 @@ module.exports = class User {
     }
     static save(user) {
         console.log(user)
-        return db.execute('INSERT INTO `usuarios` (`ID`, `Nombre`, `Apellido`, `CorreoElectronico`, `Contrasena`, `TipoUsuario`, `Estado`) VALUES (?,?,?,?,?,?,?)', [null, user.nombre, user.apellido, user.email, user.contrasena, user.tipoUsuario, user.estado]);
+        return db.execute('INSERT INTO `usuarios` (`ID`, `Nombre`, `Apellido`, `CorreoElectronico`, `Contrasena`, `TipoUsuario`, `Estado`) VALUES (?,?,?,?,?,?,?)', [null, user.Nombre, user.Apellido, user.CorreoElectronico, user.Contrasena, user.TipoUsuario, user.Estado]);
     }
 
     static resetPassword(email, contrasena) {
         return db.execute('UPDATE usuarios SET Contrasena = ? WHERE CorreoElectronico = ?', [contrasena, email]);
+    }
+
+    static fetchbyCentro(id) {
+        return db.execute('SELECT u.ID, u.Nombre, u.Apellido, u.CorreoElectronico, u.TipoUsuario, u.Estado FROM usuarios u, centros c, alumnos a WHERE a.IDCentro = ? and u.ID = a.IDUsuario and a.IDCentro=c.ID', [id]);
     }
 }

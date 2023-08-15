@@ -39,6 +39,7 @@ exports.login = async(req, res, next) => {
 
     try {
         const user = await User.find(req.body.correoElectronico);
+        console.log(user)
         if (user[0].length !== 1) {
             const error = new Error('A user with this email could not be found.');
             error.statusCode = 401;
@@ -55,8 +56,8 @@ exports.login = async(req, res, next) => {
         }
 
         const token = jwt.sign({
-            email: storedUser.correoElectronico,
-            userId: storedUser.id
+            email: storedUser.CorreoElectronico,
+            userId: storedUser.ID
         }, 'secretfortoken', { expiresIn: '24h' });
         const role = storedUser.TipoUsuario;
 
@@ -75,16 +76,16 @@ exports.login = async(req, res, next) => {
 }
 
 exports.recovery = async(req, res, next) => {
-    console.log(req.body)
     const email = req.body.correoElectronico;
     try {
         const user = await User.find(email);
-        console.log(user[0][0].CorreoElectronico)
+        console.log(user)
         if (user[0].length !== 1) {
             const error = new Error('A user with this email could not be found.');
             error.statusCode = 401;
-            throw error;
             console.log(error);
+
+            throw error;
         } else {
             const token = jwt.sign({ correo: email }, 'secretfortoken', { expiresIn: '24h' });
             const transporter = nodemailer.createTransport({
@@ -126,7 +127,9 @@ exports.recovery = async(req, res, next) => {
 }
 
 exports.resetPassword = async(req, res, next) => {
+    console.log(req.headers['authorization']);
     const email = jwt.decode(req.headers['authorization'].split(' ')[1]).correo;
+
     const contrasena = req.body.password;
     try {
         const hashedPassword = await bcrypt.hash(contrasena, 12);

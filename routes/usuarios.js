@@ -10,19 +10,21 @@ const router = express.Router();
 
 const authController = require('../controllers/auth');
 
-router.get('/',auth, usuariosController.fetchAll);
-router.get('/get/:id',auth, usuariosController.fetchUser);
+router.get('/', auth, usuariosController.fetchAll);
+router.get('/get/:id', auth, usuariosController.fetchUser);
 
 router.post('/create', [
     auth,
     body('Nombre').trim().not().isEmpty(),
-    body('Direccion').trim().not().isEmpty(),
-    body('correoElectronico').isEmail().withMessage('Please enter a valid email.').normalizeEmail(),
-    body('telefono').trim().not().isEmpty(),
+    body('Apellidos').trim().not().isEmpty(),
+    body('CorreoElectronico').isEmail().withMessage('Please enter a valid email.').normalizeEmail(),
+    body('TipoUsuario').trim().not().isEmpty(),
 ], usuariosController.createUser);
 
 
 
 router.delete('/delete/:id', auth, usuariosController.deleteUser);
+
+router.get('/getByCentro/:id', auth, usuariosController.fetchbyCentro);
 
 module.exports = router;

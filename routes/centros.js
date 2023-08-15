@@ -10,8 +10,8 @@ const router = express.Router();
 
 const authController = require('../controllers/auth');
 
-router.get('/',auth, centrosController.fetchAll);
-router.get('/get/:id',auth, centrosController.fetchCentro);
+router.get('/', auth, centrosController.fetchAll);
+router.get('/get/:id', auth, centrosController.fetchCentro);
 
 router.post('/create', [
     auth,
@@ -24,5 +24,8 @@ router.post('/create', [
 
 
 router.delete('/delete/:id', auth, centrosController.deleteCentro);
+
+
+router.get('/getAlumnosCentro/:id', auth, centrosController.fetchAlumnosCentro);
 
 module.exports = router;

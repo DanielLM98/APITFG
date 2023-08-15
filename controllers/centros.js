@@ -17,10 +17,12 @@ exports.fetchAll = async(req, res, next) => {
 
 exports.fetchCentro = async(req, res, next) => {
     try {
-        const [Centro] = await Centro.find(req.params.id);
-        res.status(200).json(Centro[0]);
+        const [Centr] = await Centro.fecthCentro(req.params.id);
+        console.log(Centr)
+        res.status(200).json(Centr[0]);
     } catch (err) {
         if (!err.statusCode) {
+            console.log(err)
             err.statusCode = 500;
         }
         next(err);
@@ -60,3 +62,15 @@ exports.createCenter = async(req, res, next) => {
     }
 
 };
+
+exports.fetchAlumnosCentro = async(req, res, next) => {
+    try {
+        const [alumnos] = await Centro.fetchAlumnosCentro(req.params.id);
+        res.status(200).json(alumnos);
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
