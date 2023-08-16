@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const extension = file.mimetype.split('/')[1];
-        const filename = `${file.originalname}-${Date.now()}.${extension}`;
+        const filename = `${file.filename}-${Date.now()}.${extension}`;
         console.log(filename)
         cb(null, filename)
     }
@@ -33,5 +33,7 @@ router.post('/create', auth, upload.single('archivo'),formulariosController.crea
 router.delete('/delete/:id', auth, formulariosController.deleteForm);
 
 router.get('/getbyrol/:rol',auth, formulariosController.getFormsByRol);
+
+router.get('/rellenar/:id',auth, formulariosController.getFormToFill);
 
 module.exports = router;

@@ -5,6 +5,8 @@ const errorController = require('./controllers/error');
 const authRoutes = require('./routes/auth');
 const app = express();
 const cors = require('cors');
+const path = require('path');
+
 
 app.use(bodyParser.json())
 app.set('port', process.env.PORT || 3000);
@@ -22,11 +24,13 @@ app.use((req, res, next) => {
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
 // routes
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+app.use('/public', express.static('public'));
 app.use('/auth', require('./routes/auth'));
 app.use('/centros', require('./routes/centros'));
 app.use('/usuarios', require('./routes/usuarios'));
