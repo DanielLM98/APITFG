@@ -24,13 +24,13 @@ app.use((req, res, next) => {
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static('filled'));
 
 // routes
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
-app.use('/public', express.static('public'));
+app.use('/filled', express.static('filled'));
 app.use('/auth', require('./routes/auth'));
 app.use('/centros', require('./routes/centros'));
 app.use('/usuarios', require('./routes/usuarios'));

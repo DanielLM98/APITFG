@@ -70,7 +70,7 @@ exports.createForm = async (req, res, next) => {
     const rol = req.body.rol;
     let archivo;
     if (req.file == undefined) {
-        
+
         archivo = '';
     } else {
         archivo = req.file.path;
@@ -133,45 +133,50 @@ exports.getFormToFill = async (req, res, next) => {
     try {
         const [Form] = await Formulario.fetchOne(req.params.id);
         const [Respuestas] = await Formulario.getRespuestas(req.params.id);
-        const formdir =  Form[0].Archivo;
+        const formdir = Form[0].Archivo;
         const pdf = await fs.readFile(formdir);
         const pdfDoc = await PDFDocument.load(pdf);
         const form = pdfDoc.getForm()
 
         const fields = form.getFields();
         const entry = JSON.parse(Respuestas[0].Respuestas);
-      fields.forEach(field => {
-        const type = field.constructor.name;
-        const name = field.getName();
-        for (let i=0; i<Object.keys(entry).length; i++){
-            const key = Object.keys(entry)[i];
-            const value = Object.values(entry)[i];
-            if(type == 'PDFTextField' ){
-                if(name == key){
-                    form.getTextField(name).setText(value);
-                }
-            }else if(type == 'PDFDropdown'){
-                if(name == key){
-                    form.getDropdown(name).select(value);
+        fields.forEach(field => {
+            const type = field.constructor.name;
+            const name = field.getName();
+            for (let i = 0; i < Object.keys(entry).length; i++) {
+                const key = Object.keys(entry)[i];
+                const value = Object.values(entry)[i];
+                if (type == 'PDFTextField') {
+                    if (name == key) {
+                        form.getTextField(name).setText(value);
+                    }
+                } else if (type == 'PDFDropdown') {
+                    if (name == key) {
+                        form.getDropdown(name).select(value);
+                    }
                 }
             }
-        }
-    });
+        });
 
         const pdfBytes = await pdfDoc.save();
-        await fs.writeFile(formdir, pdfBytes);
-        console.log(formdir.toString())
-        res.json(formdir.toString());
+        const pathfill = path.join('filled', `${Form[0].Nombre}-` + Date.now() + `.pdf`);
+        console.log(pathfill)
+        await fs.writeFile(pathfill, pdfBytes);
+        res.json(pathfill.toString());
+        setTimeout(() => {
+            fs.unlink(pathfill);
+        }, 3*60*1000);
 
 
 
-    } catch (err) {
-        if (!err.statusCode) {
-            err.statusCode = 500;
-            console.log(err)
+
+        } catch (err) {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+                console.log(err)
+            }
+            next(err);
         }
-        next(err);
     }
-}
 
 

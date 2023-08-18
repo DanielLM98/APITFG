@@ -15,6 +15,10 @@ module.exports = class User {
     static find(email) {
         return db.execute('SELECT * FROM usuarios WHERE CorreoElectronico = ?', [email]);
     }
+
+    static fetchbyId(id) {
+        return db.execute('SELECT * FROM usuarios WHERE ID = ?', [id]);
+    }
     static save(user) {
         console.log(user)
         return db.execute('INSERT INTO `usuarios` (`ID`, `Nombre`, `Apellido`, `CorreoElectronico`, `Contrasena`, `TipoUsuario`, `Estado`) VALUES (?,?,?,?,?,?,?)', [null, user.Nombre, user.Apellido, user.CorreoElectronico, user.Contrasena, user.TipoUsuario, user.Estado]);
