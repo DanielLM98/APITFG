@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 
 const Centro = require('../models/centros');
+const Empresas = require('../models/empresas');
 
 
 exports.fetchAll = async(req, res, next) => {
@@ -119,3 +120,14 @@ exports.fetchCentroByUser = async(req, res, next) => {
         next(err);
     }
 };
+exports.fetchEmpresasCentro = async(req, res, next) => {
+    try {
+        const [empresas] = await Empresas.fetchEmpresasCentro(req.params.id);
+        res.status(200).json(empresas);
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}

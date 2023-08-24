@@ -30,4 +30,6 @@ router.get('/:id/alumnos', auth, centrosController.fetchAlumnosCentro);
 
 router.get('/:id/tutores', auth, centrosController.fetchTutoresCentro);
 
+router.get('/:id/empresas', auth, centrosController.fetchEmpresasCentro);
+
 module.exports = router;

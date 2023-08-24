@@ -1,10 +1,11 @@
 const db = require('../util/database');
 module.exports = class Empresas {
-    constructor(nombre, direccion, email, telefono) {
+    constructor(nombre, direccion, email,telefono,CentroID ) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.email = email;
         this.telefono = telefono;
+        this.CentroID = CentroID;
 
     }
 
@@ -20,7 +21,7 @@ module.exports = class Empresas {
     }
     static save(centro) {
         console.log(centro)
-        return db.execute('INSERT INTO `empresas` (`ID`, `Nombre`, `Direccion`, `CorreoElectronico`, `Telefono`) VALUES (?,?,?,?,?)', [null, centro.nombre, centro.direccion, centro.email, centro.telefono]);
+        return db.execute('INSERT INTO `empresas` (`ID`, `Nombre`, `Direccion`, `CorreoElectronico`, `Telefono`, `CentroID`) VALUES (?,?,?,?,?,?)', [null, centro.nombre, centro.direccion, centro.email, centro.telefono, centro.CentroID]);
     }
 
     static deleteEmpresa(id) {
