@@ -18,7 +18,6 @@ exports.fetchAll = async(req, res, next) => {
 exports.fetchCentro = async(req, res, next) => {
     try {
         const [Centr] = await Centro.fecthCentro(req.params.id);
-        console.log(Centr)
         res.status(200).json(Centr[0]);
     } catch (err) {
         if (!err.statusCode) {
@@ -73,4 +72,50 @@ exports.fetchAlumnosCentro = async(req, res, next) => {
         }
         next(err);
     }
-}
+};
+
+exports.fetchTutoresCentro = async(req, res, next) => {
+    try {
+        const [tutores] = await Centro.fetchTutoresCentro(req.params.id);
+        res.status(200).json(tutores);
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+};
+
+exports.updateCentro = async(req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return
+    const nombre = req.body.nombre;
+    const direccion = req.body.direccion;
+    const email = req.body.correoElectronico;
+    const telefono = req.body.telefono;
+    try {
+        const CentroDetail = new Centro(nombre, direccion, email, telefono);
+        const result = await Centro.updateCentro(req.params.id, CentroDetail);
+        res.status(201).json({ message: 'Center updated!' });
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500;
+        }
+        next(error);
+    }
+
+};
+
+exports.fetchCentroByUser = async(req, res, next) => {
+    try {
+        const [Centr] = await Centro.fetchCentroByUser(req.params.id);
+        console.log(Centr)
+        res.status(200).json(Centr[0]);
+    } catch (err) {
+        if (!err.statusCode) {
+            console.log(err)
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+};

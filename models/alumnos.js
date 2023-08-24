@@ -1,24 +1,24 @@
-const db = require('util/database');
+const db = require('../util/database');
 
 // Define el modelo de la tabla "alumnos"
-class Alumnos {
-  constructor(IDUsuario, IDCentro, IDEmpresa, IDTutorPracticas, IDTutorClase) {
-    this.IDUsuario = IDUsuario;
-    this.IDCentro = IDCentro;
-    this.IDEmpresa = IDEmpresa;
-    this.IDTutorPracticas = IDTutorPracticas;
-    this.IDTutorClase = IDTutorClase;
-  }
+module.exports = class Alumnos {
+    constructor(IDUsuario, IDCentro, IDEmpresa, IDTutorPracticas, IDTutorClase) {
+        this.IDUsuario = IDUsuario;
+        this.IDCentro = IDCentro;
+        this.IDEmpresa = IDEmpresa;
+        this.IDTutorPracticas = IDTutorPracticas;
+        this.IDTutorClase = IDTutorClase;
+    }
 
-  static findbyUser(id){
-    return db.execute('SELECT * FROM alumnos WHERE IDUsuario = ?', [id]);
-  }
-  static create(alumno) {
-    return db.execute('INSERT INTO alumnos (ID,IDUsuario, IDCentro, IDEmpresa, IDTutorPracticas, IDTutorClase) VALUES (?,?, ?, ?, ?, ?)', [null,alumno.IDUsuario, alumno.IDCentro, alumno.IDEmpresa, alumno.IDTutorPracticas, alumno.IDTutorClase]);
-  }
+    static findbyUser(id) {
+        return db.execute('SELECT * FROM alumnos WHERE IDUsuario = ?', [id]);
+    }
+    static create(alumno) {
+        return db.execute('INSERT INTO alumnos (ID,IDUsuario, IDCentro, IDEmpresa, IDTutorPracticas, IDTutorClase) VALUES (?,?, ?, ?, ?, ?)', [null, alumno.IDUsuario, alumno.IDCentro, alumno.IDEmpresa, alumno.IDTutorPracticas, alumno.IDTutorClase]);
+    }
 
     static delete(id) {
-        return db.execute('DELETE FROM alumnos WHERE ID = ?', [id]);
+        return db.execute('DELETE FROM alumnos WHERE IDUsuario = ?', [id]);
     }
 
     static update(id, alumno) {
@@ -49,5 +49,5 @@ class Alumnos {
         return db.execute('SELECT * FROM alumnos WHERE IDTutorClase = ?', [id]);
     }
 
-    
+
 }

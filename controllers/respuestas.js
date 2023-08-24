@@ -16,11 +16,12 @@ exports.fetchAll = async(req, res, next) => {
 
 exports.fetchRespuesta = async(req, res, next) => {
     try {
-        const [Respuesta] = await Respuesta.find(req.params.id);
-        res.status(200).json(Respuesta[0]);
+        const [Respuestas] = await Respuesta.fetchByForm(req.params.id);
+        res.status(200).json(Respuestas[0]);
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
+            console.log(err)
         }
         next(err);
     }
@@ -58,10 +59,12 @@ exports.createRespuesta = async(req, res, next) => {
 }
 
 exports.updateRespuesta = async(req, res, next) => {
+    console.log(req.body)
     const errors = validationResult(req);
+    console.log(errors)
     if (!errors.isEmpty()) return
 
-    const ID = req.params.id;
+    const ID = req.params.IDFormulario;
     const Respuestas = req.body.Respuestas;
     try {
         const RespuestaDetail = new Respuesta(ID, Respuestas);
@@ -70,6 +73,7 @@ exports.updateRespuesta = async(req, res, next) => {
     } catch (error) {
         if (!error.statusCode) {
             error.statusCode = 500;
+            console.log(error)
         }
         next(error);
     }
@@ -77,11 +81,12 @@ exports.updateRespuesta = async(req, res, next) => {
 
 exports.fetchByUser = async(req, res, next) => {
     try {
-        const [Respuesta] = await Respuesta.fetchByUser(req.params.id);
-        res.status(200).json(Respuesta[0]);
+        const [ids] = await Respuesta.fetchByUser(req.params.id);
+        res.status(200).json(ids.map(id => Number(id.IDFormulario)));
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
+            console.log(err)
         }
         next(err);
     }

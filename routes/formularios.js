@@ -12,28 +12,29 @@ const authController = require('../controllers/auth');
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        console.log(req)
+    destination: function(req, file, cb) {
         cb(null, 'public/')
     },
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         const extension = file.mimetype.split('/')[1];
-        const filename = `${file.filename}-${Date.now()}.${extension}`;
-        console.log(filename)
+        const filename = `${file.originalname.split('.pdf')[0]}-${Date.now()}.${extension}`;
         cb(null, filename)
     }
 })
 
 const upload = multer({ storage: storage });
 
-router.get('/',auth, formulariosController.fetchAll);
-router.get('/get/:id',auth, formulariosController.fetchForm);
+router.get('/', auth, formulariosController.fetchAll);
+router.get('/get/:id', auth, formulariosController.fetchForm);
 
-router.post('/create', auth, upload.single('archivo'),formulariosController.createForm);
+router.post('/create', auth, upload.single('Archivo'), formulariosController.createForm);
 router.delete('/delete/:id', auth, formulariosController.deleteForm);
 
-router.get('/getbyrol/:rol',auth, formulariosController.getFormsByRol);
+router.get('/getbyrol/:rol', auth, formulariosController.getFormsByRol);
 
-router.get('/rellenar/:id',auth, formulariosController.getFormToFill);
+router.get('/rellenar/:id', auth, formulariosController.getFormToFill);
+
+router.put('/update/:id', auth, formulariosController.updateForm);
+
 
 module.exports = router;

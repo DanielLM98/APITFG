@@ -26,6 +26,8 @@ router.post('/create', [
 router.delete('/delete/:id', auth, centrosController.deleteCentro);
 
 
-router.get('/getAlumnosCentro/:id', auth, centrosController.fetchAlumnosCentro);
+router.get('/:id/alumnos', auth, centrosController.fetchAlumnosCentro);
+
+router.get('/:id/tutores', auth, centrosController.fetchTutoresCentro);
 
 module.exports = router;

@@ -17,20 +17,20 @@ exports.fetchAll = async(req, res, next) => {
 
 exports.fetchEmpresa = async(req, res, next) => {
     try {
-        const [Empresa] = await Empresa.find(req.params.id);
-        res.status(200).json(Empresa[0]);
+        const [empresa] = await Empresa.fetchEmpresa(req.params.id);
+        res.status(200).json(empresa[0]);
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
         }
         next(err);
     }
-}; 
+};
 
 exports.deleteEmpresa = async(req, res, next) => {
     try {
         const deleteResponse = await Empresa.deleteEmpresa(req.params.id);
-        res.status(200).json({ message: 'Deleted center' });
+        res.status(200).json({ message: 'Deleted empresa' });
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -61,3 +61,48 @@ exports.createEmpresa = async(req, res, next) => {
 
 };
 
+exports.updateEmpresa = async(req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return
+    const nombre = req.body.nombre;
+    const direccion = req.body.direccion;
+    const email = req.body.correoElectronico;
+    const telefono = req.body.telefono;
+    try {
+        const EmpresaDetail = new Empresa(nombre, direccion, email, telefono);
+        const result = await Empresa.updateEmpresa(req.params.id, EmpresaDetail);
+        res.status(201).json({ message: 'Empresa updated!', empresa: EmpresaDetail });
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500;
+            console.log(error)
+        }
+        next(error);
+    }
+
+};
+
+exports.fetchAlumnosEmpresa = async(req, res, next) => {
+    try {
+        const [alumnos] = await Empresa.fetchAlumnosEmpresa(req.params.id);
+        res.status(200).json(alumnos);
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+};
+
+exports.fetchTutoresEmpresa = async(req, res, next) => {
+    try {
+        const [tutores] = await Empresa.fetchTutoresEmpresa(req.params.id);
+        res.status(200).json(tutores);
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+
+};

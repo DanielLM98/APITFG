@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const authController = require('./controllers/auth');
 const errorController = require('./controllers/error');
-const authRoutes = require('./routes/auth');
 const app = express();
 const cors = require('cors');
 const path = require('path');
@@ -15,7 +14,6 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.json());
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE')
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 
@@ -37,6 +35,14 @@ app.use('/usuarios', require('./routes/usuarios'));
 app.use('/empresas', require('./routes/empresas'));
 app.use('/formularios', require('./routes/formularios'));
 app.use('/respuestas', require('./routes/respuestas'));
+app.use('/alumnos', require('./routes/alumnos'));
+app.use('/admincentros', require('./routes/admincentros'));
+app.use('/tutoresclase', require('./routes/tutoresclase'));
+app.use('/tutorestrabajo', require('./routes/tutorestrabajo'));
+
+
+
+
 
 app.use(errorController.get404);
 app.use(errorController.get500);

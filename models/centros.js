@@ -34,6 +34,14 @@ module.exports = class Centros {
     }
 
     static fetchAlumnosCentro(id) {
-        return db.execute('SELECT u.* FROM usuarios u, centros c, alumnos x WHERE x.IDCentro = ? and x.IDUsuario = u.ID and c.ID = x.IDCentro', [id]);
+        return db.execute('SELECT u.* FROM usuarios u, alumnos x WHERE x.IDCentro = ? and x.IDUsuario = u.ID', [id]);
+    }
+
+    static fetchTutoresCentro(id) {
+        return db.execute('SELECT u.* FROM usuarios u, tutoresclase x WHERE x.CentroID = ? and x.IDUsuario = u.ID', [id]);
+    }
+
+    static fetchCentroByUser(id) {
+        return db.execute('SELECT c.* FROM centros c, usuarios u WHERE u.ID = ? and u.IDCentro = c.ID', [id]);
     }
 };

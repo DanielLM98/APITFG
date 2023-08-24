@@ -12,10 +12,10 @@ const fs = require('fs').promises;
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
         cb(null, 'public/')
     },
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         const extension = file.mimetype.split('./')[1];
         const filename = `${file.fieldname}-${Date.now()}.${extension}`;
         nombrearchivo = filename;
@@ -23,9 +23,9 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage: storage }).single('archivo');
+const upload = multer({ storage: storage }).single('Archivo');
 let nombrearchivo = '';
-exports.fetchAll = async (req, res, next) => {
+exports.fetchAll = async(req, res, next) => {
     try {
         const [allForms] = await Formulario.fetchAll();
         res.status(200).json(allForms);
@@ -37,7 +37,7 @@ exports.fetchAll = async (req, res, next) => {
     }
 };
 
-exports.fetchForm = async (req, res, next) => {
+exports.fetchForm = async(req, res, next) => {
     try {
         const [Form] = await Formulario.fetchOne(req.params.id);
         res.status(200).json(Form[0]);
@@ -49,25 +49,14 @@ exports.fetchForm = async (req, res, next) => {
     }
 };
 
-exports.testForm = async (req, res, next) => {
-    upload(req, res, function (err) {
-        multer({ storage: storage }).single('archivo');
-        res.json({ message: 'Formulario registered!' })
-    });
-
-};
-
-
-exports.createForm = async (req, res, next) => {
+exports.createForm = async(req, res, next) => {
 
     const errors = validationResult(req);
-
-
     if (!errors.isEmpty()) return
-    const nombre = req.body.nombre;
-    const descripcion = req.body.descripcion;
-    const campos = req.body.campos;
-    const rol = req.body.rol;
+    const nombre = req.body.Nombre;
+    const descripcion = req.body.Descripcion;
+    const campos = req.body.Campos;
+    const rol = req.body.Rol;
     let archivo;
     if (req.file == undefined) {
 
@@ -83,14 +72,13 @@ exports.createForm = async (req, res, next) => {
     } catch (error) {
         if (!error.statusCode) {
             error.statusCode = 500;
-            console.log(error.message)
         }
         next(error);
     }
 
 };
 
-exports.getFormsByRol = async (req, res, next) => {
+exports.getFormsByRol = async(req, res, next) => {
     try {
         const [Forms] = await Formulario.getFormsByRol(req.params.rol);
         res.status(200).json(Forms);
@@ -103,7 +91,7 @@ exports.getFormsByRol = async (req, res, next) => {
 };
 
 
-exports.updateForm = async (req, res, next) => {
+exports.updateForm = async(req, res, next) => {
     try {
         const updateForm = await Formulario.update(req.body, req.params.id);
         res.status(200).json(updateForm);
@@ -115,7 +103,7 @@ exports.updateForm = async (req, res, next) => {
     }
 };
 
-exports.deleteForm = async (req, res, next) => {
+exports.deleteForm = async(req, res, next) => {
     try {
         const deleteForm = await Formulario.delete(req.params.id);
         res.status(200).json(deleteForm);
@@ -129,7 +117,7 @@ exports.deleteForm = async (req, res, next) => {
 
 
 
-exports.getFormToFill = async (req, res, next) => {
+exports.getFormToFill = async(req, res, next) => {
     try {
         const [Form] = await Formulario.fetchOne(req.params.id);
         const [Respuestas] = await Formulario.getRespuestas(req.params.id);
@@ -165,18 +153,16 @@ exports.getFormToFill = async (req, res, next) => {
         res.json(pathfill.toString());
         setTimeout(() => {
             fs.unlink(pathfill);
-        }, 3*60*1000);
+        }, 3 * 60 * 1000);
 
 
 
 
-        } catch (err) {
-            if (!err.statusCode) {
-                err.statusCode = 500;
-                console.log(err)
-            }
-            next(err);
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+            console.log(err)
         }
+        next(err);
     }
-
-
+}

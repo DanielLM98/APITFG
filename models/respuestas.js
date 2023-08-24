@@ -9,8 +9,7 @@ module.exports = class Respuestas {
 
     static save(IDUsuario, IDFormulario, respuesta) {
         return db.execute(
-            'INSERT INTO `respuestas` (`IDUsuario`, `IDFormulario`, `Respuestas`) VALUES (?,?, ?)',
-            [IDUsuario, IDFormulario, respuesta]
+            'INSERT INTO `respuestas` (`IDUsuario`, `IDFormulario`, `Respuestas`) VALUES (?,?, ?)', [IDUsuario, IDFormulario, respuesta]
         );
     }
 
@@ -30,9 +29,13 @@ module.exports = class Respuestas {
     }
 
     static fetchByUser(IDUsuario) {
-        return db.execute('SELECT * FROM respuestas WHERE IDUsuario = ?', [IDUsuario]);
+        return db.execute('SELECT IDFormulario FROM respuestas WHERE IDUsuario = ?', [IDUsuario]);
     }
 
+    static fetchByForm(IDFormulario) {
 
 
+        return db.execute('SELECT * FROM respuestas WHERE IDFormulario = ?', [IDFormulario]);
+
+    }
 }
