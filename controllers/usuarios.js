@@ -82,7 +82,7 @@ exports.createUser = async(req, res, next) => {
     if (req.body.contrasena) {
         contrasena = req.body.contrasena;
     } else {
-        contrasena = (nombre[0].toLowerCase() + ' ' + apellido).split(' ').map(word => word.substring(0, 3).toLowerCase()).join('');
+        contrasena = (nombre[0].toLowerCase() + ' ' + apellido).split(' ').map(word => word.substring(0, 3).toLowerCase()).join('') + '*';
 
     }
     const hashedPassword = await bcrypt.hash(contrasena, 12);
