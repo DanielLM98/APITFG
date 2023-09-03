@@ -47,8 +47,9 @@ exports.createEmpresa = async(req, res, next) => {
     const direccion = req.body.direccion;
     const email = req.body.correoElectronico;
     const telefono = req.body.telefono;
+    const CentroID = req.body.CentroID;
     try {
-        const EmpresaDetail = new Empresa(nombre, direccion, email, telefono);
+        const EmpresaDetail = new Empresa(nombre, direccion, email, telefono, CentroID);
         const result = await Empresa.save(EmpresaDetail);
         res.status(201).json({ message: 'Empresa registered!' });
     } catch (error) {
@@ -68,8 +69,9 @@ exports.updateEmpresa = async(req, res, next) => {
     const direccion = req.body.direccion;
     const email = req.body.correoElectronico;
     const telefono = req.body.telefono;
+    const CentroID = req.body.CentroID;
     try {
-        const EmpresaDetail = new Empresa(nombre, direccion, email, telefono);
+        const EmpresaDetail = new Empresa(nombre, direccion, email, telefono, CentroID);
         const result = await Empresa.updateEmpresa(req.params.id, EmpresaDetail);
         res.status(201).json({ message: 'Empresa updated!', empresa: EmpresaDetail });
     } catch (error) {

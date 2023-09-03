@@ -39,4 +39,12 @@ module.exports = class Empresas {
     static fetchTutoresEmpresa(id) {
         return db.execute('SELECT u.* FROM usuarios u, tutorestrabajo x WHERE x.EmpresaID = ? and x.IDUsuario = u.ID', [id]);
     }
+
+    static fetchCentrosEmpresa(id) {
+        return db.execute('SELECT c.* FROM centros c, empresas x WHERE x.ID = ? and x.CentroID = c.ID', [id]);
+    }
+
+    static fetchEmpresasCentro(id) {
+        return db.execute('SELECT * FROM empresas WHERE CentroID = ?', [id]);
+    }
 }
